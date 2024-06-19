@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "testTask.backend.deployment.name" . }}
+  name: {{ include "testask.backend.deployment.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: backend
 spec:
   replicas: {{ .Values.backend.deployment.replicas }}
   selector:
     matchLabels:
-      {{- include "testTask.selectorLabels" . | nindent 6 }}
+      {{- include "testask.selectorLabels" . | nindent 6 }}
       tier: backend
   strategy:
     rollingUpdate:
@@ -19,12 +19,12 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "testTask.selectorLabels" . | nindent 8 }}
+        {{- include "testask.selectorLabels" . | nindent 8 }}
         tier: backend
     spec:
-      serviceAccountName: {{ include "testTask.serviceAccountName" . }}
+      serviceAccountName: {{ include "testask.serviceAccountName" . }}
       containers:
-        - name: {{ include "testTask.backend.container.name" . }}
+        - name: {{ include "testask.backend.container.name" . }}
           image: "{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}"
           imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           ports:
@@ -44,9 +44,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "testTask.backend.service.name" . }}
+  name: {{ include "testask.backend.service.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: backend
 spec:
   ports:
@@ -55,7 +55,7 @@ spec:
       targetPort: 8080
       name: http
   selector:
-    {{- include "testTask.selectorLabels" . | nindent 4 }}
+    {{- include "testask.selectorLabels" . | nindent 4 }}
     tier: backend
 
 ---
@@ -64,15 +64,15 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "testTask.backend.hpa.name" . }}
+  name: {{ include "testask.backend.hpa.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: backend
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "testTask.backend.deployment.name" . }}
+    name: {{ include "testask.backend.deployment.name" . }}
   minReplicas: {{ .Values.backend.hpa.minReplicas }}
   maxReplicas: {{ .Values.backend.hpa.maxReplicas }}
   targetCPUUtilizationPercentage: {{ .Values.backend.hpa.targetCPUUtilizationPercentage }}

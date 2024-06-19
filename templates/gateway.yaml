@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "testTask.gateway.deployment.name" . }}
+  name: {{ include "testask.gateway.deployment.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: gateway
 spec:
   replicas: {{ .Values.gateway.deployment.replicas }}
   selector:
     matchLabels:
-      {{- include "testTask.selectorLabels" . | nindent 6 }}
+      {{- include "testask.selectorLabels" . | nindent 6 }}
       tier: gateway
   strategy:
     rollingUpdate:
@@ -19,24 +19,24 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include "testTask.propertiesHash" . }}
+        checksum/config: {{ include "testask.propertiesHash" . }}
       labels:
-        {{- include "testTask.selectorLabels" . | nindent 8 }}
+        {{- include "testask.selectorLabels" . | nindent 8 }}
         tier: gateway
     spec:
-      serviceAccountName: {{ include "testTask.serviceAccountName" . }}
+      serviceAccountName: {{ include "testask.serviceAccountName" . }}
       containers:
-        - name: {{ include "testTask.gateway.container.name" . }}
+        - name: {{ include "testask.gateway.container.name" . }}
           image: "{{ .Values.gateway.image.name }}:{{ .Values.gateway.image.tag }}"
           imagePullPolicy: {{ .Values.gateway.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ include "testTask.urlConfig.defaultName" . }}
+                name: {{ include "testask.urlConfig.defaultName" . }}
           env:
             - name: SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "testTask.secrets.defaultName" . }}
+                  name: {{ include "testask.secrets.defaultName" . }}
                   key: secret
           readinessProbe:
             httpGet:
@@ -55,9 +55,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "testTask.gateway.service.name" . }}
+  name: {{ include "testask.gateway.service.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: gateway
 spec:
   type: {{ .Values.gateway.service.type }}
@@ -67,7 +67,7 @@ spec:
       targetPort: 8080
       name: http
   selector:
-    {{- include "testTask.selectorLabels" . | nindent 4 }}
+    {{- include "testask.selectorLabels" . | nindent 4 }}
     tier: gateway
 
 ---
@@ -76,15 +76,15 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "testTask.gateway.hpa.name" . }}
+  name: {{ include "testask.gateway.hpa.name" . }}
   labels:
-    {{- include "testTask.labels" . | nindent 4 }}
+    {{- include "testask.labels" . | nindent 4 }}
     tier: gateway
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "testTask.gateway.deployment.name" . }}
+    name: {{ include "testask.gateway.deployment.name" . }}
   minReplicas: {{ .Values.gateway.hpa.minReplicas }}
   maxReplicas: {{ .Values.gateway.hpa.maxReplicas }}
   targetCPUUtilizationPercentage: {{ .Values.gateway.hpa.targetCPUUtilizationPercentage }}
