@@ -1,5 +1,10 @@
 # Тестовое задание helm chart
 
+## Описание
+
+Разворачивание образа nginxdemos/hello с балансировщиком нагрузки ingress-nginx 
+
+
 ## Использование
 ```
 git clone https://github.com/0x0B0x11/testask/  
