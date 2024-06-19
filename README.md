@@ -2,7 +2,7 @@
 
 ## Описание
 
-Разворачивание образа nginxdemos/hello с балансировщиком нагрузки ingress-nginx 
+Разворачивание образа nginxdemos/hello через helm chart
 
 
 ## Использование
