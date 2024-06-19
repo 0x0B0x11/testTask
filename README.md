@@ -1,10 +1,11 @@
 # Тестовое задание helm chart
 
 ## Использование
-git clone https://github.com/0x0B0x11/testask/
-cd testask
-helm package .  # пакетирование
-helm install testask-0.1.0.tgz --generate-name # установка пакета через helm в k8s
+
+git clone https://github.com/0x0B0x11/testask/  
+cd testask  
+helm package .  # пакетирование  
+helm install testask-0.1.0.tgz --generate-name # установка пакета через helm в k8s  
 
 # Тестовое задание чек-лист деплоя на прод
 
@@ -14,4 +15,5 @@ helm install testask-0.1.0.tgz --generate-name # установка пакета
 - Все заинтересованные лица оповещены, дата и время деплоя утверждены  
 - План быстрого отката изменений подготовлен
 - Бекап данных пользователей актуален
-- 
+- Утверждена стратегия выкатки на прод
+
